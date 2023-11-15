@@ -26,6 +26,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.tc.nasaapiclean.R
 import com.tc.nasaapiclean.screens.apod.ApodScreen
+import com.tc.nasaapiclean.screens.mars.MarsScreen
 import com.tc.nasaapiclean.ui.theme.NasaApiCleanTheme
 import com.tc.nasaapiclean.viewmodels.apod.ApodViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -45,8 +46,8 @@ class MainActivity : ComponentActivity() {
                 ) {
                     // Navigation Host
                     val navController = rememberNavController()
-                    NavHost(navController = navController, startDestination = "apodScreen") {
-                        composable("apodScreen") { ApodScreen() }
+                    NavHost(navController = navController, startDestination = "marsScreen") {
+                        composable("marsScreen") { MarsScreen() }
                         // Add more routes for other screens here
                     }
                 }

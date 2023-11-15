@@ -6,6 +6,6 @@ import com.tc.data.model.data_model.neo.NeoItemModel
 
 interface Repository {
     suspend fun getApod(startDate:String , endDate:String):List<ApodItemModel>
-    suspend fun getMarPhoto(): List<MarsRoverItemModel>
+    suspend fun getMarsPhoto(): MarsRoverItemModel
     suspend fun getNeo(startDate:String , endDate:String):NeoItemModel
 }

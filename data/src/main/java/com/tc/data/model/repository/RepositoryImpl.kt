@@ -11,7 +11,7 @@ class RepositoryImpl @Inject constructor(val apiRequest: ApiService):Repository 
     override suspend fun getApod(startDate:String , endDate:String): List<ApodItemModel>{
         return apiRequest.getApod(startDate,endDate)
     }
-    override suspend fun getMarPhoto(): List<MarsRoverItemModel>{
+    override suspend fun getMarsPhoto(): MarsRoverItemModel{
        return apiRequest.getMarsPhotos()
     }
     override suspend fun getNeo(startDate:String , endDate:String): NeoItemModel{
