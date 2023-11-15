@@ -21,9 +21,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.tc.nasaapiclean.R
+import com.tc.nasaapiclean.screens.apod.ApodScreen
 import com.tc.nasaapiclean.ui.theme.NasaApiCleanTheme
+import com.tc.nasaapiclean.viewmodels.apod.ApodViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,24 +43,14 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-
+                    // Navigation Host
+                    val navController = rememberNavController()
+                    NavHost(navController = navController, startDestination = "apodScreen") {
+                        composable("apodScreen") { ApodScreen() }
+                        // Add more routes for other screens here
+                    }
                 }
             }
         }
-    }
-}
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    NasaApiCleanTheme {
-        Greeting("Android")
     }
 }

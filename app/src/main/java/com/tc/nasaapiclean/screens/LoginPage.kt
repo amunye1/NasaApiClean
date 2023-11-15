@@ -89,13 +89,8 @@ fun Login() {
     }
 }
 
-
-@Preview(showBackground = true)
+@Preview
 @Composable
 fun PreviewLoginPage(){
-
-    Surface (modifier = Modifier.fillMaxSize(), color = Color.White){
-        Login()
-    }
 
 }

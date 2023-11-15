@@ -7,7 +7,5 @@ data class NeoItemModel(
     @SerializedName("element_count")
     val elementCount: Int? = 0,
     @SerializedName("links")
-    val links: LinksModel? = LinksModel(),
-    @SerializedName("near_earth_objects")
-    val nearEarthObjects: NearEarthObjectsModel? = NearEarthObjectsModel()
+    val links: LinksModel? = LinksModel()
 )

@@ -10,10 +10,10 @@ import retrofit2.http.Query
 interface ApiService {
     @GET(ApiDetails.APOD_ENDPOINT)
     suspend fun getApod(
-        @Query("start_date") start_date :String ,
-        @Query("end_date")  end_date :String ,
+        @Query("start_date") startDate :String ,
+        @Query("end_date")  endDate :String ,
         @Query("api_key") apiKey: String = KEY
-    ): ApodItemModel
+    ): List<ApodItemModel>
 
     @GET(ApiDetails.MARS_ENDPOINT)
     suspend fun getMarsPhotos(
@@ -22,8 +22,8 @@ interface ApiService {
     ):List<MarsRoverItemModel>
     @GET(ApiDetails.NEO_ENDPOINT)
     suspend fun getNeo(
-        @Query("start_date") start_date :String ,
-        @Query("end_date")  end_date :String ,
+        @Query("start_date") startDate :String ,
+        @Query("end_date")  endDate :String ,
         @Query("api_key") apiKey: String = KEY
     ):NeoItemModel
 }
