@@ -1,8 +1,10 @@
 package com.tc.nasaapiclean.screens
 
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -21,10 +23,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.tc.nasaapiclean.R
+import com.tc.nasaapiclean.screens.apod.ApodDetailScreen
 import com.tc.nasaapiclean.screens.apod.ApodScreen
 import com.tc.nasaapiclean.screens.mars.MarsScreen
 import com.tc.nasaapiclean.ui.theme.NasaApiCleanTheme
@@ -33,6 +38,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    @RequiresApi(Build.VERSION_CODES.O)
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,9 +52,16 @@ class MainActivity : ComponentActivity() {
                 ) {
                     // Navigation Host
                     val navController = rememberNavController()
-                    NavHost(navController = navController, startDestination = "marsScreen") {
-                        composable("marsScreen") { MarsScreen() }
-                        // Add more routes for other screens here
+                    NavHost(navController, startDestination = "apodScreen") {
+                        composable("apodScreen") { ApodScreen(navController) }
+                        composable(
+                            "apodDetail/{date}",
+                            arguments = listOf(navArgument("date") { type = NavType.StringType })
+                        ) { backStackEntry ->
+                            val date = backStackEntry.arguments?.getString("date") ?: ""
+                            ApodDetailScreen(date = date)
+                        }
+                        // ... other routes ...
                     }
                 }
             }

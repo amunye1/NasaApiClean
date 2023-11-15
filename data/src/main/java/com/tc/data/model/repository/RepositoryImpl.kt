@@ -8,8 +8,8 @@ import javax.inject.Inject
 
 class RepositoryImpl @Inject constructor(val apiRequest: ApiService):Repository {
 
-    override suspend fun getApod(startDate:String , endDate:String): List<ApodItemModel>{
-        return apiRequest.getApod(startDate,endDate)
+    override suspend fun getApod(date:String): ApodItemModel{
+        return apiRequest.getApod(date)
     }
     override suspend fun getMarsPhoto(): MarsRoverItemModel{
        return apiRequest.getMarsPhotos()
