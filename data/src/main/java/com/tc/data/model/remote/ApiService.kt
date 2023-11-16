@@ -16,7 +16,7 @@ interface ApiService {
 
     @GET(ApiDetails.MARS_ENDPOINT)
     suspend fun getMarsPhotos(
-        @Query("sol") sol: Int = 1,
+        @Query("sol") sol: Int = 10,
         @Query("api_key") apiKey: String = KEY
     ):MarsRoverItemModel
     @GET(ApiDetails.NEO_ENDPOINT)
@@ -25,4 +25,6 @@ interface ApiService {
         @Query("end_date")  endDate :String ,
         @Query("api_key") apiKey: String = KEY
     ):NeoItemModel
+
+
 }

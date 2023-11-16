@@ -32,6 +32,7 @@ import com.tc.nasaapiclean.R
 import com.tc.nasaapiclean.screens.apod.ApodDetailScreen
 import com.tc.nasaapiclean.screens.apod.ApodScreen
 import com.tc.nasaapiclean.screens.mars.MarsScreen
+import com.tc.nasaapiclean.screens.spacefacts.SpaceFactScreen
 import com.tc.nasaapiclean.ui.theme.NasaApiCleanTheme
 import com.tc.nasaapiclean.viewmodels.apod.ApodViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -52,7 +53,7 @@ class MainActivity : ComponentActivity() {
                 ) {
                     // Navigation Host
                     val navController = rememberNavController()
-                    NavHost(navController, startDestination = "apodScreen") {
+                    NavHost(navController, startDestination = "spaceFactScreen") {
                         composable("apodScreen") { ApodScreen(navController) }
                         composable(
                             "apodDetail/{date}",
@@ -61,7 +62,15 @@ class MainActivity : ComponentActivity() {
                             val date = backStackEntry.arguments?.getString("date") ?: ""
                             ApodDetailScreen(date = date)
                         }
-                        // ... other routes ...
+                        composable("marsScreen") { MarsScreen() }
+                        composable(
+                            "marsDetail/{photoId}",
+                            arguments = listOf(navArgument("photoId") { type = NavType.IntType })
+                        ) { backStackEntry ->
+                            val photoId = backStackEntry.arguments?.getInt("photoId") ?: -1
+                            //MarsDetailScreen(photoId = photoId)
+                        }
+                        composable("spaceFactScreen"){ SpaceFactScreen()}
                     }
                 }
             }

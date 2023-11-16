@@ -1,19 +1,29 @@
 package com.tc.nasaapiclean.screens.mars
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import coil.compose.AsyncImage
 import com.tc.nasaapiclean.viewmodels.mars.MarsViewModel
 
 @Composable
@@ -35,8 +45,27 @@ fun MarsScreen() {
         } else {
             marsData?.photos?.let {
 
-                LazyColumn {
+                LazyColumn (horizontalAlignment = Alignment.CenterHorizontally){
                     items(it) {photo->
+                        Box(modifier = Modifier.fillMaxSize()){
+                            Card(modifier = Modifier.fillMaxSize(.8f).align(Alignment.Center),
+                                shape = RoundedCornerShape(8.dp),
+                                elevation = CardDefaults.elevatedCardElevation(8.dp),
+
+                                ) {
+                                Text(text ="Name: ${photo.rover?.name} \n Earth Date: ${photo.earthDate}" , textAlign = TextAlign.Center)
+                                Spacer(modifier = Modifier.padding(16.dp))
+                                AsyncImage(model = photo.imgSrc, contentDescription = null,
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .height(200.dp), // Set a fixed height or adjust as needed
+                                    contentScale = ContentScale.Crop, // Adjust the scaling as needed)
+
+                                )
+
+                            }
+                        }
+
 //                    it.camera
 //                    marsData?.photos?.forEach { photo ->
 //                        Text(text = "Photos: ${photo}")
