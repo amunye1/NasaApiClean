@@ -63,6 +63,7 @@ dependencies {
     implementation("androidx.compose.material3:material3")
     implementation(project(":domain"))
     implementation(project(":data"))
+    androidTestImplementation ("androidx.test:runner:1.5.2")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
@@ -70,7 +71,10 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
-
+    // For instrumented tests.
+    androidTestImplementation ("com.google.dagger:hilt-android-testing:2.44")
+    // ...with Kotlin.
+    kaptAndroidTest ("com.google.dagger:hilt-android-compiler:2.44")
     // Hilt Viewmodel
     implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
 
