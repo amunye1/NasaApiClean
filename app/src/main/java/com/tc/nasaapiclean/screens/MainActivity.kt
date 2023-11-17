@@ -29,6 +29,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.tc.nasaapiclean.R
+import com.tc.nasaapiclean.bottom_navaigation.Screens
+import com.tc.nasaapiclean.bottom_navaigation.listOfNavItems
 import com.tc.nasaapiclean.screens.apod.ApodDetailScreen
 import com.tc.nasaapiclean.screens.apod.ApodScreen
 import com.tc.nasaapiclean.screens.mars.MarsScreen
@@ -45,32 +47,63 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             NasaApiCleanTheme {
-
+                val navController = rememberNavController()
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
+                    var selectedItemIndex by rememberSaveable {
+                        mutableStateOf(0)
+                    }
                     // Navigation Host
-                    val navController = rememberNavController()
-                    NavHost(navController, startDestination = "spaceFactScreen") {
-                        composable("apodScreen") { ApodScreen(navController) }
-                        composable(
-                            "apodDetail/{date}",
-                            arguments = listOf(navArgument("date") { type = NavType.StringType })
-                        ) { backStackEntry ->
-                            val date = backStackEntry.arguments?.getString("date") ?: ""
-                            ApodDetailScreen(date = date)
+                    Scaffold(
+                        bottomBar = {
+                            NavigationBar {
+                                listOfNavItems.forEachIndexed{ index, item->
+                                    NavigationBarItem(
+                                        selected = selectedItemIndex == index,
+                                        onClick = { 
+                                                  selectedItemIndex = index
+                                            navController.navigate(item.route) {
+                                                // Configure the navigation action to avoid unexpected behaviors
+                                                launchSingleTop = true  // Avoid multiple copies of the same destination
+                                                restoreState = true  // Restore state when navigating back to a screen
+                                                popUpTo(navController.graph.startDestinationId) { saveState = true }
+                                            }
+                                                
+                                        },
+                                        label = {
+                                                Text(text = item.title)
+                                        }
+                                        ,
+                                        icon = { Icon(painter = painterResource(id = if(index == selectedItemIndex){
+                                            
+                                            item.icon_fill
+                                        }else item.icon), contentDescription = item.title ) })
+                                    
+                                }
+                            }
                         }
-                        composable("marsScreen") { MarsScreen() }
-                        composable(
-                            "marsDetail/{photoId}",
-                            arguments = listOf(navArgument("photoId") { type = NavType.IntType })
-                        ) { backStackEntry ->
-                            val photoId = backStackEntry.arguments?.getInt("photoId") ?: -1
-                            //MarsDetailScreen(photoId = photoId)
+                    ) {it
+                        NavHost(
+                            navController,
+
+                            startDestination = Screens.ApodScreen.name,
+
+                            ) {
+                            composable(Screens.ApodScreen.name) { ApodScreen(navController) }
+            composable(
+                "apodDetail/{date}",
+                arguments = listOf(navArgument("date") { type = NavType.StringType })
+            ) { backStackEntry ->
+                val date = backStackEntry.arguments?.getString("date") ?: ""
+                ApodDetailScreen(date = date)
+            }
+                            composable(Screens.MarRoverScreen.name) { MarsScreen() }
+
+                            composable(Screens.SpaceFactScreen.name){ SpaceFactScreen() }
                         }
-                        composable("spaceFactScreen"){ SpaceFactScreen()}
                     }
                 }
             }
