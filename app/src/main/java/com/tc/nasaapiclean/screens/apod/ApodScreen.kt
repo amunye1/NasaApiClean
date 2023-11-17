@@ -43,9 +43,9 @@ fun ApodScreen(navController: NavController) {
     val errorMessage = viewModel.errorMessage.collectAsState().value
 
     val selectedDate = remember { mutableStateOf(generateRandomPastDate()) }
-    LaunchedEffect(Unit) {
-        viewModel.fetchApod(selectedDate.value)
-    }
+//    LaunchedEffect(Unit) {
+//        viewModel.fetchApod(selectedDate.value)
+//    }
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Button(onClick = { viewModel.fetchApod(selectedDate.value) }) {
             Text("Fetch APOD Data")
